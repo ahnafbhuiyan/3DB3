@@ -18,7 +18,7 @@ create table PhoneNumbers(
     PersonID bigint not null,
 	PhoneNum bigint not null,
 	NumType varchar(60),
-	primary key (NumType),
+	primary key (PhoneNum),
 	foreign key (PersonID) references Person (PersonID) on delete cascade
 );
 
@@ -82,7 +82,7 @@ create table Oscar(
     YearGiven int,
     primary key (MovieID,PersonID),
     foreign key (MovieID) references Movie (MovieID) on delete cascade,
-    foreign key (DirectorID) references Actor (PersonID) on delete cascade
+    foreign key (PersonID) references Actor (PersonID) on delete cascade
 );
 
 -- Initializing table Visits
@@ -110,8 +110,9 @@ create table Theatre(
 create table Concession(
     ConcessionID bigint not null,
     TheatreID bigint not null,
-	primary key (ConcessionID,TheatreID),
-    foreign key (TheatreID) references Theatre(TheatreID)
+    ConcType varchar(60),
+	primary key (ConcessionID, TheatreID),
+    foreign key (TheatreID) references Theatre (TheatreID)
 );
 
 -- Initializing table TheatreShowing
@@ -124,18 +125,16 @@ create table TheatreShowing(
     ScrnNum int,
 	primary key (MovieID,TheatreID),
     foreign key (MovieID) references Movie (MovieID) on delete cascade,
-    foreign key (TheatreID) references Theatre(TheatreID)
+    foreign key (TheatreID) references Theatre (TheatreID)
 );
 
 -- Initializing table Product
 create table Product(
     SKU bigint not null,
-    ConcessionID bigint not null,
     ProdName varchar(60),
     Price float,
     Category varchar(60),
-    primary key (SKU),
-    foreign key (ConcessionID) references Concession(ConcessionID)
+    primary key (SKU)
 );
 
 -- Initializing table Transactions
@@ -145,8 +144,30 @@ create table Transactions(
 	TransactionDate date,
 	Amount float,
     PaymentMethod varchar (60),
+    primary key (TransactionID, PersonID),
     foreign key (PersonID) references Goer (PersonID)
 );
+
+create table ActorInMovie(
+    PersonID bigint not null,
+    MovieID bigint not null,
+    ActorRole varchar (60),
+    primary key (PersonID, MovieID),
+    foreign key (PersonID) references Actor (PersonID)on delete cascade,
+	foreign key (MovieID) references Movie (MovieID) on delete cascade
+);
+
+create table ProductSoldInTransaction(
+    SKU bigint not null,
+    TransactionID bigint not null,
+    Quantity int,
+    primary key (SKU,TransactionID),
+    foreign key (SKU) references Product on delete cascade,
+	foreign key (TransactionID) references Transactions on delete cascade
+);
+
+
+
 
 
 
