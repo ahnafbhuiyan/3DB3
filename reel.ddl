@@ -66,7 +66,6 @@ create table Award(
     MovieID bigint not null,
     PersonID bigint not null,
 	AwardName varchar(60),
-    Genre varchar(60),
     YearGiven int,
     Budget bigint,
     primary key (MovieID,PersonID),
@@ -89,7 +88,7 @@ create table Oscar(
 create table Visits(
     PersonID bigint not null,
 	PaymentMethod varchar(60),
-    ReleaseDate date,
+    VisitDate date,
     TicketPrice float,
     primary key (PersonID), 
     foreign key (PersonID) references Goer (PersonID) on delete cascade
