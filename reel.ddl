@@ -147,6 +147,7 @@ create table Transactions(
     foreign key (PersonID) references Goer (PersonID)
 );
 
+-- Initializing table ActorInMovie
 create table ActorInMovie(
     PersonID bigint not null,
     MovieID bigint not null,
@@ -156,6 +157,7 @@ create table ActorInMovie(
 	foreign key (MovieID) references Movie (MovieID) on delete cascade
 );
 
+-- Initializing table ProductSoldInTransaction
 create table ProductSoldInTransaction(
     SKU bigint not null,
     TransactionID bigint not null,
